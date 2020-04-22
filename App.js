@@ -17,6 +17,8 @@ import AssetExample from './components/AssetExample';
 import { Asset } from 'expo-asset'
 import * as FileSystem from 'expo-file-system'
 
+import * as ImageManipulator from "expo-image-manipulator"
+
 export default class App extends React.Component {
 
   state = {
@@ -85,10 +87,12 @@ console.log('required.localUri', required.localUri)
     }
   }
   
-  _printPdf() {
+  async _printPdf() {
     const { image, required, local_doc, local_cache } = this.state
-    
 console.log('print images:', this.state)
+    const b64_local_cache = await ImageManipulator.manipulateAsync(local_cache, [], {base64:true})
+console.log('b64_local_cache:', b64_local_cache)
+
 		Print.printAsync({
 			html: `
 <html>
@@ -101,6 +105,9 @@ console.log('print images:', this.state)
 		<h1>local image from photo:</h1>
 		<img src="${image.uri}" width="300" height="300" />
 
+		<h1>B64 local doc:</h1>
+		<img src="data:image/png;base64,${b64_local_cache.base64}" width="300" height="300" />
+    
 		<h1>from local doc:</h1>
 		<img src="${local_doc}" width="300" height="300" />
 
@@ -120,6 +127,7 @@ console.log('print images:', this.state)
 </body>
 </html>`
     })
+
   }
   render() {
     const { image, required, local_doc, local_cache } = this.state;
