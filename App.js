@@ -6,7 +6,8 @@ import Constants from 'expo-constants';
 import * as Print from 'expo-print';
 import * as ImagePicker from 'expo-image-picker';
 
-//CC import * as Permissions from 'expo-permissions';
+// CC import * as Permissions from 'expo-permissions';
+// see https://github.com/expo/expo/issues/11504
 import * as MediaLibrary from 'expo-media-library';
 
 // You can import from local files
@@ -31,11 +32,11 @@ export default class App extends React.Component {
     local_cache: null,
   }
 
-  componentDidMount() {
-    this.getPermissionAsync();
+  async componentDidMount() {
+    await this.getPermissionAsync();
         
     const required = Asset.fromModule(require('./components/AssetExample/test.png'))
-    console.log('required', required)
+console.log('required', required)
     this.setState({required})
     
     required.downloadAsync().then(() => {
@@ -100,6 +101,9 @@ console.log('print images:', this.state)
     const b64_local_cache = await ImageManipulator.manipulateAsync(local_cache, [], {base64:true})
 console.log('b64_local_cache:', b64_local_cache)
 
+    const b64_from_photo = await ImageManipulator.manipulateAsync(image.uri, [], {base64:true})
+console.log('b64_from_photo:', b64_from_photo)
+
 		Print.printAsync({
 			html: `
 <html>
@@ -111,6 +115,9 @@ console.log('b64_local_cache:', b64_local_cache)
 
 		<h1>local image from photo:</h1>
 		<img src="${image.uri}" width="300" height="300" />
+
+		<h1>local image B64 from photo:</h1>
+		<img src="data:image/png;base64,${b64_from_photo.base64}" width="300" height="300" />
 
 		<h1>B64 local doc:</h1>
 		<img src="data:image/png;base64,${b64_local_cache.base64}" width="300" height="300" />
