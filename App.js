@@ -5,7 +5,9 @@ import { Text, Image, View, StyleSheet, Button
 import Constants from 'expo-constants';
 import * as Print from 'expo-print';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
+
+//CC import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
 
 // You can import from local files
 import AssetExample from './components/AssetExample';
@@ -65,10 +67,15 @@ console.log('required.localUri', required.localUri)
 
   getPermissionAsync = async () => {
     //if (Constants.platform.ios) {
+      // CC sdk 42
+      let r = await MediaLibrary.requestPermissionsAsync()
+      console.log('r', r)
+      /*
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
         alert('Sorry, we need camera roll permissions to make this work!');
       }
+      */
     //}
   }
 
