@@ -29,5 +29,7 @@ and the PDF doesn't show any kind of file:// URIs
 
 ###
 
+## observed behaviour change
+
 As apparent, now (Expo SDK 42) the Android behaviour became the same as iOS.
 That is, the PDF no more shows images from the file system, just remote URLs or base64 inlined.
