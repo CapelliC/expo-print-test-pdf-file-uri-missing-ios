@@ -27,3 +27,7 @@ after I discovered that passing the (undocumented?) option
 Then I had to upgrade to the latest SDK, to follow up with maintenance duties,
 and the PDF doesn't show any kind of file:// URIs
 
+###
+
+As apparent, now (Expo SDK 42) the Android behaviour became the same as iOS.
+That is, the PDF no more shows images from the file system, just remote URLs or base64 inlined.
